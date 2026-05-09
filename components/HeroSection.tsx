@@ -149,8 +149,11 @@ export default function HeroSection() {
       {/* ── Vignette Overlay ───────────────────────── */}
       <div className="absolute inset-0 vignette z-[5]" />
 
-      {/* ── Dark Gradient Overlay ──────────────────── */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[rgba(8,8,8,0.3)] to-transparent z-[6]" />
+      {/* ── Dark Gradient Overlay (stronger for text readability) ── */}
+      <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[rgba(8,8,8,0.55)] to-[rgba(8,8,8,0.3)] z-[6]" />
+
+      {/* ── Center darken for text contrast ─── */}
+      <div className="absolute inset-0 z-[7]" style={{ background: 'radial-gradient(ellipse at center 55%, rgba(8,8,8,0.6) 0%, transparent 70%)' }} />
 
       {/* ── Text Content ───────────────────────────── */}
       <div className="relative z-20 flex flex-col items-center justify-center h-full text-center px-4">
@@ -158,7 +161,7 @@ export default function HeroSection() {
         <h1
           ref={dakshRef}
           className="text-shimmer font-heading text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-[0.2em] mb-2"
-          style={{ opacity: 0, transform: 'translateY(30px)' }}
+          style={{ opacity: 0, transform: 'translateY(30px)', textShadow: '0 2px 20px rgba(0,0,0,0.8), 0 0 60px rgba(0,0,0,0.5)' }}
         >
           DAKSH
         </h1>
@@ -168,7 +171,7 @@ export default function HeroSection() {
           {jewellersLetters.map((letter, i) => (
             <span
               key={i}
-              className="letter font-heading text-xl sm:text-2xl md:text-3xl tracking-[0.5em] text-gold font-light"
+              className="letter font-heading text-xl sm:text-2xl md:text-3xl tracking-[0.5em] text-gold font-light drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]"
               style={{ opacity: 0, transform: 'translateY(15px)' }}
             >
               {letter}
@@ -179,7 +182,7 @@ export default function HeroSection() {
         {/* Tagline */}
         <p
           ref={taglineRef}
-          className="font-body text-text-muted text-sm sm:text-base md:text-lg tracking-widest mb-10"
+          className="font-body text-white/80 text-sm sm:text-base md:text-lg tracking-widest mb-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
           style={{ opacity: 0, transform: 'translateY(15px)' }}
         >
           Where Tradition Meets Luxury

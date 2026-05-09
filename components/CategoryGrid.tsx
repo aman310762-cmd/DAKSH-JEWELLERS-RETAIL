@@ -2,16 +2,17 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const categories = [
-  { name: 'Gold Chains', gradient: 'from-[#2a1f0a] to-[#111]', icon: '⛓' },
-  { name: 'Gold Rings', gradient: 'from-[#1a1508] to-[#111]', icon: '💍' },
-  { name: 'Gold Earrings', gradient: 'from-[#1f1a0a] to-[#111]', icon: '✨' },
-  { name: 'Gold Bangles', gradient: 'from-[#251c08] to-[#111]', icon: '⭕' },
-  { name: 'Gold Necklaces', gradient: 'from-[#2a200a] to-[#111]', icon: '📿' },
-  { name: 'Bridal Jewellery', gradient: 'from-[#2d1a0a] to-[#111]', icon: '👑' },
-  { name: 'Pendants', gradient: 'from-[#1a1a0a] to-[#111]', icon: '🔶' },
-  { name: 'Kids Jewellery', gradient: 'from-[#1a200a] to-[#111]', icon: '🌟' },
+  { name: 'Gold Chains', image: '/images/gold-chain.jpg' },
+  { name: 'Gold Rings', image: '/images/gold-ring.jpg' },
+  { name: 'Gold Earrings', image: '/images/gold-earrings.jpg' },
+  { name: 'Gold Bangles', image: '/images/gold-bangles.jpg' },
+  { name: 'Gold Necklaces', image: '/images/hero-necklace.jpg' },
+  { name: 'Bridal Jewellery', image: '/images/hero-necklace.jpg' },
+  { name: 'Pendants', image: '/images/gold-pendant.jpg' },
+  { name: 'Kids Jewellery', image: '/images/gold-bangles.jpg' },
 ];
 
 const containerVariants = {
@@ -60,22 +61,25 @@ export default function CategoryGrid() {
               href={`/shop?category=${encodeURIComponent(cat.name)}`}
               className="group block relative overflow-hidden rounded bg-surface border border-border-gold-strong hover:shadow-[0_0_25px_rgba(201,168,76,0.15)] transition-all duration-500"
             >
-              {/* Gradient Background */}
-              <div className={`aspect-[4/3] bg-gradient-to-br ${cat.gradient} flex items-center justify-center transition-transform duration-700 group-hover:scale-105`}>
-                <span className="text-5xl sm:text-6xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 select-none">
-                  {cat.icon}
-                </span>
+              {/* Real Product Image */}
+              <div className="aspect-[4/3] relative overflow-hidden">
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 280px"
+                />
+                {/* Dark overlay for text contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,8,8,0.8)] via-[rgba(8,8,8,0.2)] to-[rgba(8,8,8,0.1)] group-hover:from-[rgba(8,8,8,0.9)] transition-all duration-500" />
               </div>
 
-              {/* Overlay on hover */}
-              <div className="absolute inset-0 bg-[rgba(8,8,8,0.1)] group-hover:bg-[rgba(8,8,8,0.3)] transition-colors duration-500" />
-
               {/* Category Name */}
-              <div className="p-4 sm:p-5">
-                <h3 className="font-heading text-base sm:text-lg text-text-primary group-hover:text-gold transition-colors duration-300">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+                <h3 className="font-heading text-base sm:text-lg text-white group-hover:text-gold transition-colors duration-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                   {cat.name}
                 </h3>
-                <span className="font-body text-xs text-text-muted mt-1 flex items-center gap-1 group-hover:text-gold-light transition-colors duration-300">
+                <span className="font-body text-xs text-white/60 mt-1 flex items-center gap-1 group-hover:text-gold-light transition-colors duration-300">
                   Explore
                   <svg className="w-3 h-3 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                     <path d="M5 12h14M12 5l7 7-7 7" />

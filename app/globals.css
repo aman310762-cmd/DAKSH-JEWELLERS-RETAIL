@@ -1,26 +1,261 @@
 @import "tailwindcss";
 
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DAKSH JEWELLERS — DESIGN TOKENS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core palette */
+  --background: #080808;
+  --surface: #111111;
+  --surface-raised: #181818;
+  --gold: #C9A84C;
+  --gold-light: #E8C97A;
+  --gold-dark: #9A7A2E;
+  --text-primary: #F5F0E8;
+  --text-muted: #8A8070;
+  --border-gold: rgba(201, 168, 76, 0.15);
+  --border-gold-strong: rgba(201, 168, 76, 0.3);
+  --whatsapp-green: #25D366;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-foreground: var(--text-primary);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
+  --color-text-primary: var(--text-primary);
+  --color-text-muted: var(--text-muted);
+  --color-border-gold: var(--border-gold);
+  --color-border-gold-strong: var(--border-gold-strong);
+  --color-whatsapp: var(--whatsapp-green);
+  --font-heading: var(--font-heading);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BASE STYLES
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-body), 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SELECTION COLOUR
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+::selection {
+  background: rgba(201, 168, 76, 0.3);
+  color: #F5F0E8;
+}
+
+::-moz-selection {
+  background: rgba(201, 168, 76, 0.3);
+  color: #F5F0E8;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SCROLLBAR — DARK LUXURY
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 168, 76, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 168, 76, 0.5);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TYPOGRAPHY HELPERS
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.font-heading {
+  font-family: var(--font-heading), 'Cormorant Garamond', serif;
+}
+
+.font-body {
+  font-family: var(--font-body), 'DM Sans', sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), 'JetBrains Mono', monospace;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SHIMMER TEXT ANIMATION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--gold-dark) 0%,
+    var(--gold-light) 25%,
+    var(--gold) 50%,
+    var(--gold-light) 75%,
+    var(--gold-dark) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   GOLD GLOW BORDER ANIMATION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes goldPulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(201, 168, 76, 0.2),
+                0 0 15px rgba(201, 168, 76, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px rgba(201, 168, 76, 0.4),
+                0 0 30px rgba(201, 168, 76, 0.2);
+  }
+}
+
+.gold-pulse {
+  animation: goldPulse 2.5s ease-in-out infinite;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   MARQUEE ANIMATION
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   WHATSAPP BOUNCE
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes whatsappBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LIGHT RAYS ANIMATION (HERO)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes rayRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-rays {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(201, 168, 76, 0.03) 10deg,
+    transparent 20deg,
+    transparent 40deg,
+    rgba(201, 168, 76, 0.05) 50deg,
+    transparent 60deg,
+    transparent 80deg,
+    rgba(201, 168, 76, 0.03) 90deg,
+    transparent 100deg,
+    transparent 120deg,
+    rgba(201, 168, 76, 0.04) 130deg,
+    transparent 140deg,
+    transparent 160deg,
+    rgba(201, 168, 76, 0.03) 170deg,
+    transparent 180deg,
+    transparent 200deg,
+    rgba(201, 168, 76, 0.05) 210deg,
+    transparent 220deg,
+    transparent 240deg,
+    rgba(201, 168, 76, 0.03) 250deg,
+    transparent 260deg,
+    transparent 280deg,
+    rgba(201, 168, 76, 0.04) 290deg,
+    transparent 300deg,
+    transparent 320deg,
+    rgba(201, 168, 76, 0.03) 330deg,
+    transparent 340deg,
+    transparent 360deg
+  );
+  animation: rayRotate 60s linear infinite;
+  pointer-events: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   VIGNETTE OVERLAY
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.vignette {
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 40%,
+    rgba(8, 8, 8, 0.5) 70%,
+    rgba(8, 8, 8, 0.85) 100%
+  );
 }

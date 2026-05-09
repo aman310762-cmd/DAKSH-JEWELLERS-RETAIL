@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /daksh-manage-2024/
+Disallow: /api/
+
+Sitemap: https://daksh-jewellers.vercel.app/sitemap.xml

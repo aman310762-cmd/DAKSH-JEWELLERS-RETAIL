@@ -19,9 +19,11 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  /* ── Hardcoded admin credentials ── */
-  const ADMIN_USERNAME = 'Parveen@123';
-  const ADMIN_PASSWORD = 'Focused123';
+  /* ── Hardcoded admin credentials (client-side fallback) ── */
+  const ADMIN_CREDENTIALS = [
+    { username: 'Parveen@123', password: 'Focused123' },
+    { username: 'dakshretailadmin', password: 'DJRetail@#123' },
+  ];
   const ADMIN_PHONE = '9896424648';
   const VALID_OTP = '2024'; // Fixed OTP for simplicity
 
@@ -30,33 +32,39 @@ export default function AdminLoginPage() {
     setLoading(true);
     setError('');
 
-    // Client-side auth (works without backend)
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    // First try backend API (bcrypt-verified, production-safe)
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: username, password }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        if (data.token) localStorage.setItem('adminToken', data.token);
+        localStorage.setItem('adminLoggedIn', 'true');
+        setLoading(false);
+        router.push('/daksh-manage-2024');
+        return;
+      }
+    } catch {
+      // Backend unavailable — try client-side fallback
+    }
+
+    // Client-side fallback (works without backend/DB)
+    const match = ADMIN_CREDENTIALS.find(
+      (c) => c.username === username && c.password === password
+    );
+    if (match) {
       localStorage.setItem('adminToken', 'admin-authenticated');
       localStorage.setItem('adminLoggedIn', 'true');
+      setLoading(false);
       router.push('/daksh-manage-2024');
-    } else {
-      // Also try backend if available
-      try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-        const res = await fetch(`${apiUrl}/api/admin/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({ email: username, password }),
-        });
-        const data = await res.json();
-        if (res.ok && data.success) {
-          if (data.token) localStorage.setItem('adminToken', data.token);
-          localStorage.setItem('adminLoggedIn', 'true');
-          router.push('/daksh-manage-2024');
-        } else {
-          setError('Incorrect username or password');
-        }
-      } catch {
-        setError('Incorrect username or password');
-      }
+      return;
     }
+
+    setError('Incorrect username or password');
     setLoading(false);
   };
 

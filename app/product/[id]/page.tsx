@@ -61,6 +61,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   const [isMobile, setIsMobile] = useState(false);
   const [copied, setCopied] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const addItem = useCartStore((s) => s.addItem);
 
   useEffect(() => {
@@ -155,16 +156,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               ) : (
                 <>
                   <ScrollRotate
-                    imageSrc={product.images[0]?.secureUrl || '/images/hero-necklace.jpg'}
+                    imageSrc={product.images[selectedImageIndex]?.secureUrl || product.images[0]?.secureUrl || '/images/hero-necklace.jpg'}
                     alt={product.name}
                   />
-                  {/* Thumbnails for desktop */}
+                  {/* Thumbnails for desktop — click to change main image */}
                   {product.images.length > 1 && (
                     <div className="flex gap-2 mt-3">
                       {product.images.map((img, i) => (
-                        <div key={i} className="relative w-20 h-20 rounded overflow-hidden border-2 border-border-gold">
+                        <button
+                          key={i}
+                          onClick={() => setSelectedImageIndex(i)}
+                          className={`relative w-20 h-20 rounded overflow-hidden border-2 transition-all duration-300 cursor-pointer ${
+                            selectedImageIndex === i
+                              ? 'border-gold shadow-[0_0_10px_rgba(201,168,76,0.4)] scale-105'
+                              : 'border-border-gold hover:border-gold/60 opacity-70 hover:opacity-100'
+                          }`}
+                        >
                           <img src={img.secureUrl} alt={`${product.name} ${i + 1}`} className="w-full h-full object-cover" />
-                        </div>
+                        </button>
                       ))}
                     </div>
                   )}

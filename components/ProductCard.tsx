@@ -49,8 +49,8 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group bg-surface border border-border-gold rounded overflow-hidden transition-all duration-500 hover:shadow-[0_0_30px_rgba(201,168,76,0.12)] hover:border-gold/40 cursor-pointer"
       style={{ transition: 'transform 0.15s ease-out, box-shadow 0.5s ease, border-color 0.5s ease' }}
     >
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-[#0a0a0a]">
+      {/* Image — clickable to product detail */}
+      <Link href={`/product/${product._id}`} className="block relative aspect-square overflow-hidden bg-[#0a0a0a]">
         <Image
           src={mainImage}
           alt={product.name}
@@ -59,7 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,8,8,0.6)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      </div>
+      </Link>
 
       {/* Info */}
       <div className="p-4 sm:p-5">
